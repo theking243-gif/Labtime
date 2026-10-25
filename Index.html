@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LABTIME</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #171923;
+      color: white;
+      text-align: center;
+    }
+    header {
+      background: #5865f2;
+      padding: 22px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    main {
+      padding: 25px;
+    }
+    input, button {
+      padding: 12px;
+      margin: 6px;
+      border: 0;
+      border-radius: 8px;
+    }
+    button {
+      background: #5865f2;
+      color: white;
+      cursor: pointer;
+    }
+    #messages {
+      margin: 20px auto;
+      max-width: 450px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <header>💬 LABTIME</header>
+  <main>
+    <h2>Your community starts here!</h2>
+    <p>Welcome to LABTIME — chat with your friends.</p>
+    <div id="messages"></div>
+    <input id="message" placeholder="Write a message...">
+    <button onclick="sendMessage()">Send</button>
+  </main>
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("message");
+      if (!input.value.trim()) return;
+      const msg = document.createElement("p");
+      msg.textContent = "You: " + input.value;
+      document.getElementById("messages").appendChild(msg);
+      input.value = "";
+    }
+  </script>
+</body>
+                     </html>
+
+
+                     
