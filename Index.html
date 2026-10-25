@@ -6,6 +6,210 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LABTIME</title>
   <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #232428;
+      color: white;
+    }
+
+    header {
+      background: #5865f2;
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 70px);
+    }
+
+    aside {
+      width: 125px;
+      background: #1e1f22;
+      padding: 12px;
+    }
+
+    aside button {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 12px 5px;
+      background: #35363c;
+      color: white;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    aside button:hover { background: #5865f2; }
+
+    main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+    }
+
+    #messages {
+      flex: 1;
+      min-height: 250px;
+      overflow-y: auto;
+      background: #2b2d31;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .message {
+      background: #383a40;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    form {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #383a40;
+      color: white;
+      font-size: 16px;
+    }
+
+    form button {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #5865f2;
+      color: white;
+      font-weight: bold;
+    }
+
+    #status {
+      color: #b5bac1;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <header>🚀 LABTIME</header>
+
+  <div class="layout">
+    <aside>
+      <p>YOUR ROOMS</p>
+      <button onclick="changeRoom('general')"># General</button>
+      <button onclick="changeRoom('gaming')">🎮 Gaming</button>
+      <button onclick="changeRoom('friends')">👥 Friends</button>
+    </aside>
+
+    <main>
+      <h2 id="roomTitle"># general</h2>
+      <p id="status">Welcome to LABTIME!</p>
+
+      <div id="messages" aria-live="polite">
+        <div class="message">
+          <strong>LABTIME</strong>
+          <p>Welcome! Send your first message below.</p>
+        </div>
+      </div>
+
+      <form id="chatForm">
+        <input
+          id="messageInput"
+          placeholder="Message #general..."
+          maxlength="500"
+          autocomplete="off"
+          required
+        >
+        <button type="submit">Send</button>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    let currentRoom = "general";
+    const roomMessages = {
+      general: [],
+      gaming: [],
+      friends: []
+    };
+
+    const messages = document.getElementById("messages");
+    const input = document.getElementById("messageInput");
+
+    function changeRoom(room) {
+      currentRoom = room;
+      document.getElementById("roomTitle").textContent = "# " + room;
+      input.placeholder = "Message #" + room + "...";
+      renderMessages();
+    }
+
+    function renderMessages() {
+      messages.replaceChildren();
+
+      const items = roomMessages[currentRoom];
+
+      if (items.length === 0) {
+        const welcome = document.createElement("div");
+        welcome.className = "message";
+        welcome.textContent = "Welcome to #" + currentRoom + "!";
+        messages.appendChild(welcome);
+      }
+
+      items.forEach(item => {
+        const box = document.createElement("div");
+        box.className = "message";
+
+        const author = document.createElement("strong");
+        author.textContent = "You";
+
+        const content = document.createElement("p");
+        content.textContent = item;
+
+        box.append(author, content);
+        messages.appendChild(box);
+      });
+
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    document.getElementById("chatForm").addEventListener(
+      "submit",
+      function(event) {
+        event.preventDefault();
+        const message = input.value.trim();
+
+        if (!message) return;
+
+        roomMessages[currentRoom].push(message);
+        input.value = "";
+        renderMessages();
+      }
+    );
+  </script>
+</body>
+</html>
+
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LABTIME</title>
+  <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
